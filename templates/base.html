@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Understand observable Solana activity with verifiable evidence and transparent limitations.">
+  <title>{% block title %}ScamShield · Wallet intelligence{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="ScamShield home"><span class="brand-icon" aria-hidden="true">S</span><span>Scam<span class="accent">Shield</span><small>WALLET INTELLIGENCE</small></span></a>
+  <div class="nav-caption">WORKSPACE</div>
+  <nav aria-label="Main navigation">
+    <a href="/" {% if request.path == '/' %}aria-current="page"{% endif %}><span aria-hidden="true">◈</span> Dashboard</a>
+    <a href="/how-it-works" {% if request.path == '/how-it-works' %}aria-current="page"{% endif %}><span aria-hidden="true">≡</span> How It Works</a>
+    <a href="/about" {% if request.path == '/about' %}aria-current="page"{% endif %}><span aria-hidden="true">○</span> About</a>
+  </nav>
+  <div class="sidebar-note"><span class="tiny-tag">READ ONLY</span><p>Public data.<br>Verifiable evidence.<br>Transparent limits.</p><small>No wallet connection.<br>No signatures or payments.</small></div>
+  <div class="sidebar-bottom">SOLANA HACKATHON <span>2026</span></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> <strong>{% block crumb %}Wallet analysis{% endblock %}</strong></span><div class="top-status"><span class="pill">Mainnet Beta</span><span id="backend-status" class="muted">Checking backend…</span></div></header>
+  <main id="main">{% block content %}{% endblock %}</main>
+  <footer>ScamShield v1.0 <span>Know the risk before you trust.</span><a href="/about">Scope and limitations ↗</a></footer>
+</div>
+</body></html>

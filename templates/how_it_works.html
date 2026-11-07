@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}How It Works · ScamShield{% endblock %}
+{% block crumb %}How It Works{% endblock %}
+{% block content %}
+<article class="prose"><p class="eyebrow">FROM CHAIN TO CONTEXT</p><h1>Verify the evidence.<br><span>Understand the context.</span></h1><p class="lead">From a public address to the evidence, without connecting your wallet.</p>
+<h2>01 · Enter a public address</h2><p>An address is an identifier, similar to an account number. It is not a password. On Solana, it represents 32 bytes encoded in Base58 and may also identify a program or data account.</p>
+<h2>02 · We retrieve a sample</h2><p>RPC is a way to request data from a network server. We verify Mainnet and retrieve up to 25 recent signatures and their details. A signature identifies a transaction; referencing an address does not prove that it initiated the transaction. We do not sign transactions or move funds.</p>
+<h2>03 · We apply transparent rules</h2><p>Activity Burst requires at least five signatures within 60 seconds, representing at least half the dated sample. Repetitive Transfers requires three distinct transactions with the same destination and amount in explicit outgoing SOL transfers. SPL tokens and swaps are outside this version’s parser scope.</p>
+<h2>04 · We distinguish missing data from alerts</h2><p>A small or short sample indicates limited coverage, not a newly created wallet. When a rule lacks data, its status is insufficient_data. Each triggered behavioral rule adds 50 points; the index is available only when both rules can be calculated. It is not a scam probability.</p>
+<h2>05 · Verify the evidence</h2><p>Open the signatures in Solana Explorer and compare the report with the source. Check the collection time: cached data and snapshots are earlier captures, not instantaneous queries. The local explanation summarizes the rules; optional AI text is labelled as unverified.</p>
+<a class="button-link" href="/">Analyze an address ↗</a></article>
+{% endblock %}

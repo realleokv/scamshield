@@ -1,0 +1,162 @@
+{
+  "account": {
+    "executable": false,
+    "owner": "11111111111111111111111111111111",
+    "status": "available"
+  },
+  "alerts": [],
+  "analyzed_at": "2026-11-07T06:18:40.659525Z",
+  "experimental_alert_index": {
+    "is_probability": false,
+    "maximum": 100,
+    "name": "Índice Experimental de Alertas",
+    "observed_points": 0,
+    "value": null,
+    "weights": {
+      "ACTIVITY_BURST": 50,
+      "LIMITED_OBSERVED_HISTORY": 0,
+      "REPETITIVE_TRANSFERS": 50
+    }
+  },
+  "explanation": {
+    "fallback_reason": "not_requested",
+    "language": "pt",
+    "source": "local",
+    "text": "Examinamos detalhes de 5 transações de uma amostra limitada. Nenhuma regra comportamental foi acionada no subconjunto disponível. 1 regra(s) comportamental(is) não puderam ser calculadas. Esses padrões também ocorrem em atividades legítimas. A amostra não comprova idade ou segurança da carteira. Confira as evidências e as limitações de cobertura.",
+    "verified": false
+  },
+  "indicators": [
+    {
+      "category": "behavior",
+      "description": "Concentração de referências ao endereço em um período curto.",
+      "evidence": [],
+      "id": "ACTIVITY_BURST",
+      "limitations": [
+        "Referenciar o endereço não significa que ele iniciou a transação.",
+        "Bots, serviços legítimos e tentativas falhadas também podem formar rajadas."
+      ],
+      "method": "Pelo menos 5 assinaturas em 60 s e 50% da amostra datada; exige 5 ou mais datas e nenhuma ausente.",
+      "metrics": {
+        "fraction": 0.4,
+        "max_in_60s": 2,
+        "timestamped_signatures": 5
+      },
+      "severity": "none",
+      "status": "not_triggered",
+      "title": "Activity Burst"
+    },
+    {
+      "category": "behavior",
+      "description": "Saídas de SOL com mesmo destino e valor exato em transações distintas.",
+      "evidence": [],
+      "id": "REPETITIVE_TRANSFERS",
+      "limitations": [
+        "Somente SOL nativo parsed; tokens SPL, swaps e transferWithSeed não são interpretados.",
+        "Pagamentos recorrentes legítimos podem acionar a regra.",
+        "Alterações líquidas de saldo não são tratadas como transferências."
+      ],
+      "method": "System Program transfer bem-sucedido; grupo por origem, destino e lamports em pelo menos 3 assinaturas distintas.",
+      "metrics": {
+        "largest_group": 0,
+        "recognized_transfer_transactions": 0,
+        "repeated_groups": 0
+      },
+      "severity": "none",
+      "status": "insufficient_data",
+      "title": "Repetitive Transfers"
+    },
+    {
+      "category": "coverage",
+      "description": "Cobertura limitada da amostra; não é evidência de fraude.",
+      "evidence": [],
+      "id": "LIMITED_OBSERVED_HISTORY",
+      "limitations": [
+        "Menos de 10 assinaturas observadas."
+      ],
+      "method": "Menos de 10 assinaturas, menos de 24 horas, datas ausentes, detalhes ausentes ou registros descartados.",
+      "metrics": {
+        "dropped_records": 0,
+        "signatures_observed": 5,
+        "span_seconds": 5279737,
+        "unavailable_details": 0
+      },
+      "severity": "info",
+      "status": "triggered",
+      "title": "Limited Observed History"
+    }
+  ],
+  "limitations": [
+    "A análise cobre somente a amostra solicitada, não o histórico total nem a idade do endereço.",
+    "Alertas indicam comportamento, não fraude comprovada. Ausência de alertas não garante segurança.",
+    "Este MVP não simula uma transação futura nem detecta todos os golpes.",
+    "O parser reconhece apenas saídas explícitas de SOL nativo; saldos líquidos não provam transferências.",
+    "O limite da amostra foi atingido; pode existir mais atividade não consultada.",
+    "Menos de 10 assinaturas observadas."
+  ],
+  "network": "mainnet-beta",
+  "observed_period": {
+    "end": "2026-05-31T09:20:05Z",
+    "span_seconds": 5279737,
+    "start": "2026-03-31T06:44:28Z"
+  },
+  "provenance": {
+    "cache_hits": 6,
+    "collection_partial": false,
+    "commitment": "finalized",
+    "newest_fetch_at": "2026-11-07T06:18:39.155923Z",
+    "oldest_fetch_at": "2026-11-07T06:09:56.748775Z",
+    "source": "solana_json_rpc"
+  },
+  "report_version": "1.0",
+  "request_id": "68ce14adf35572f9",
+  "sample_limit": 5,
+  "severity": "unknown",
+  "signatures_observed": 5,
+  "status": "completed",
+  "successful_transactions": 5,
+  "transactions": [
+    {
+      "detail_status": "available",
+      "execution_status": "success",
+      "explorer_url": "https://explorer.solana.com/tx/bqTH7u2PJ33gDQwZMy9BXVxABRpgUbY8xSuK6y9PpKYxucFKhiJyiD7JTrH1zxFvMEJGz4847tvotMoP1Ekavaa",
+      "observed_at": "2026-05-31T09:20:05Z",
+      "outgoing_sol_transfers": [],
+      "signature": "bqTH7u2PJ33gDQwZMy9BXVxABRpgUbY8xSuK6y9PpKYxucFKhiJyiD7JTrH1zxFvMEJGz4847tvotMoP1Ekavaa"
+    },
+    {
+      "detail_status": "available",
+      "execution_status": "success",
+      "explorer_url": "https://explorer.solana.com/tx/5TSSD3AGjBoEG347VZrdSmKVh8wL7zsNPiRS1iJ933PqCxyGpCoVnA3V3RiSc5SxgdnWhnRf13rjcWYdsNVesuDc",
+      "observed_at": "2026-03-31T07:48:01Z",
+      "outgoing_sol_transfers": [],
+      "signature": "5TSSD3AGjBoEG347VZrdSmKVh8wL7zsNPiRS1iJ933PqCxyGpCoVnA3V3RiSc5SxgdnWhnRf13rjcWYdsNVesuDc"
+    },
+    {
+      "detail_status": "available",
+      "execution_status": "success",
+      "explorer_url": "https://explorer.solana.com/tx/3WbZmV2KEtJyAeQekZt8Kv1jteEr4i3JsewtzS3s8EHxCCPL87H4BVSLTPJUGa1waDkyST9ZjJjgYzgbLv5NPjzv",
+      "observed_at": "2026-03-31T07:47:54Z",
+      "outgoing_sol_transfers": [],
+      "signature": "3WbZmV2KEtJyAeQekZt8Kv1jteEr4i3JsewtzS3s8EHxCCPL87H4BVSLTPJUGa1waDkyST9ZjJjgYzgbLv5NPjzv"
+    },
+    {
+      "detail_status": "available",
+      "execution_status": "success",
+      "explorer_url": "https://explorer.solana.com/tx/63FL4RwPLwr3kYwnm4tghA1zz28ZmPtLikdvEvuraxDgZM63ReorZURVT5PANprqKfWisJGHiy9F9qLqLTsG1Yim",
+      "observed_at": "2026-03-31T07:39:18Z",
+      "outgoing_sol_transfers": [],
+      "signature": "63FL4RwPLwr3kYwnm4tghA1zz28ZmPtLikdvEvuraxDgZM63ReorZURVT5PANprqKfWisJGHiy9F9qLqLTsG1Yim"
+    },
+    {
+      "detail_status": "available",
+      "execution_status": "success",
+      "explorer_url": "https://explorer.solana.com/tx/SrLtZTSsyLtnsrxtWCnP6KaYKHzgEh61NCj37G8pRvMcUq5uhR7RA1rA7BJBNJ4waWRQNNXXTxvkTu24vf7THSh",
+      "observed_at": "2026-03-31T06:44:28Z",
+      "outgoing_sol_transfers": [],
+      "signature": "SrLtZTSsyLtnsrxtWCnP6KaYKHzgEh61NCj37G8pRvMcUq5uhR7RA1rA7BJBNJ4waWRQNNXXTxvkTu24vf7THSh"
+    }
+  ],
+  "transactions_analyzed": 5,
+  "transactions_unavailable": 0,
+  "wallet": "vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg"
+}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow"><span class="dot"></span> ON-CHAIN SIGNALS. HUMAN CONTEXT.</p><h1>Read the signals.<br><span>Understand the limits.</span></h1><p class="lead">Explore the activity of a Solana address.<br>Transparent indicators, with evidence you can verify.</p></div>
+  <div class="hero-symbol" aria-hidden="true"><div class="orbital orbital-one"></div><div class="orbital orbital-two"></div><div class="shield">S</div><span class="symbol-label">EVIDENCE FIRST</span></div>
+</section>
+<section class="analysis-panel" aria-labelledby="analysis-title">
+  <div class="panel-heading"><div><p class="eyebrow">01 / INVESTIGATE</p><h2 id="analysis-title">One address. More context.</h2></div><span class="tag-blue">Read only</span></div>
+  <form id="analyze-form">
+    <label for="wallet">Public Solana address</label>
+    <div class="search-row"><input id="wallet" name="wallet" type="text" maxlength="44" required autocomplete="off" spellcheck="false" placeholder="Paste a public address here…" aria-describedby="wallet-help"><button id="analyze-button" type="submit">Analyze Wallet <span aria-hidden="true">↗</span></button></div>
+    <p class="field-help" id="wallet-help">Use only a public address. Never enter a seed phrase or private key.</p>
+    <div class="options-row"><div class="option"><label for="limit">Sample size</label><select id="limit"><option value="5">Up to 5 transactions</option><option value="10" selected>Up to 10 transactions</option><option value="25">Up to 25 transactions</option></select></div><div class="option"><label for="language">Summary language</label><select id="language"><option value="en" selected>English</option><option value="pt">Portuguese</option></select></div><label class="checkbox"><input type="checkbox" id="use-ai"> Use optional AI explanation</label></div>
+    <p id="ai-note" class="field-help">Without AI, explanations use local rules. When enabled and configured, structured metrics are sent to the operator-configured Ollama instance, without addresses or signatures.</p>
+    <button class="text-button" id="example-button" type="button">Use the address from the official Solana example <span aria-hidden="true">↗</span></button>
+  </form>
+  <div id="loading" class="loading" role="status" hidden><span class="spinner" aria-hidden="true"></span><div><strong>Fetching the sample…</strong><p>Waiting for the RPC and analyzing available data. This may take about a minute.</p></div></div>
+  <div id="error" class="error" role="alert" tabindex="-1" hidden></div>
+</section>
+<section id="empty-state" class="empty-state"><div class="section-heading"><h2>What we look for</h2><span>3 indicators · transparent rules</span></div><div class="feature-grid"><article class="feature"><span class="feature-num">01</span><h3>Activity Burst</h3><p>Transaction clusters within 60-second windows.</p><span class="feature-meta">BEHAVIOR</span></article><article class="feature"><span class="feature-num">02</span><h3>Repetitive Transfers</h3><p>Outgoing SOL transfers with the same destination and amount across distinct transactions.</p><span class="feature-meta">BEHAVIOR</span></article><article class="feature"><span class="feature-num">03</span><h3>Limited Observed History</h3><p>Shows when the sample provides limited coverage.</p><span class="feature-meta blue">COVERAGE · NO POINTS</span></article></div><p class="disclaimer">No data has been fetched yet. Alerts do not prove fraud; the absence of alerts does not guarantee safety.</p></section>
+<section id="report" hidden aria-labelledby="report-heading" tabindex="-1"></section>
+{% endblock %}

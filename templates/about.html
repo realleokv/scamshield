@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}About · ScamShield{% endblock %}
+{% block crumb %}About{% endblock %}
+{% block content %}
+<article class="prose"><p class="eyebrow">WHY SCAMSHIELD</p><h1>Technical data.<br><span>Human explanations.</span></h1><p class="lead">A small, auditable and accessible tool for exploring public Solana activity.</p>
+<h2>The problem</h2><p>Signatures, instructions and programs can be difficult for beginners to interpret. ScamShield organizes a sample and explains patterns with links to the original data.</p>
+<h2>What we do</h2><p>We query Mainnet in read-only mode. We look for activity clusters and repeated explicit outgoing SOL transfers. Sample coverage is reported separately and adds no points to the experimental index.</p>
+<h2>What the results mean</h2><p>An activity burst or repeated payment can be legitimate. The application does not attribute criminality, verify identity or certify a wallet as safe. It does not analyze the entire history, interpret every program or simulate a transaction before signing.</p>
+<h2>How we built it</h2><p>Python 3.12, Flask, Requests, SQLite and plain JavaScript, with HTML and CSS. No login, smart contracts or payments. Operator-configured Ollama is an optional explanation module; every rule remains deterministic.</p>
+<h2>Privacy</h2><p>The RPC provider receives the queried address. The server temporarily stores local cache and history for up to seven days, with a limit of 500 reports. Optional AI explanations receive only structured metrics, without addresses or signatures. We do not request private keys or use trackers.</p>
+<h2>Transparency</h2><p>This version was developed with ChatGPT assistance in research, documentation, code and tests. The team must review, understand and disclose this assistance in its submission. Fraud detection accuracy has not been established.</p>
+<a class="button-link" href="/">Open dashboard ↗</a></article>
+{% endblock %}
