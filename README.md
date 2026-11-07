@@ -2,58 +2,74 @@
 
 **Know the risk before you trust.**
 
-Ferramenta educacional para inspecionar indicadores em uma amostra pública de um endereço Solana. A aplicação consulta a Mainnet de verdade e mostra evidências verificáveis. Não conecta carteiras, não solicita seed phrase, não assina e não movimenta dinheiro.
+An educational tool for inspecting observable indicators in a public sample of Solana address activity. The application queries Mainnet using real blockchain data and provides verifiable evidence. It does not connect wallets, request seed phrases, sign transactions, or move funds.
 
-## Comece aqui
+The public interface is in English, including help pages, messages, and indicators. Summaries default to English; the language selector also supports explanations in Portuguese.
 
-O ZIP contém a pasta `scamshield`. Extraia o ZIP inteiro e abra essa pasta no VS Code ou no Explorador. Os comandos abaixo devem ser executados no **PowerShell**, na pasta que contém `app.py`. Não abra `index.html` diretamente: o Flask precisa estar rodando.
+## Getting started
 
-### 1. Python no Windows 11
+The ZIP contains the `scamshield` folder. Extract the entire ZIP and open that folder in VS Code or File Explorer.
 
-Instale Python pelo [site oficial para Windows](https://www.python.org/downloads/windows/), escolhendo uma versão estável compatível. O projeto foi testado com Python 3.12. Use uma versão atualizada da série que escolher; não precisa instalar Rust, Node.js, React ou TypeScript.
+Run the following commands in **PowerShell**, inside the folder containing `app.py`. Do not open `index.html` directly: Flask must be running.
 
-No instalador clássico, habilite o launcher e a opção de adicionar Python ao PATH, quando disponíveis. Se o PC tiver políticas da escola, utilize a instalação autorizada. Feche e reabra o PowerShell depois de instalar.
+### 1. Install Python on Windows 11
+
+Install Python from the [official Windows downloads page](https://www.python.org/downloads/windows/), choosing a compatible stable version.
+
+This project was tested with Python 3.12. Use an updated release of your chosen Python series. Rust, Node.js, React, and TypeScript are not required.
+
+When using the classic installer, enable the Python launcher and the option to add Python to PATH, when available. On a school-managed computer, follow the authorized installation process.
+
+Close and reopen PowerShell after installation.
 
 ```powershell
 py -3.12 --version
 ```
 
-Esse comando verifica se o Python 3.12 está instalado. Se você tiver outra versão compatível, use `py -3 --version` e troque apenas o comando de criação do ambiente por `py -3 -m venv .venv`. Versões diferentes da 3.12 não foram verificadas nesta entrega.
+This command checks whether Python 3.12 is installed.
 
-### 2. Entre na pasta
+If you have another compatible version, use `py -3 --version` and replace the environment creation command with `py -3 -m venv .venv`. Versions other than Python 3.12 were not verified in this delivery.
+
+### 2. Open the project folder
 
 ```powershell
-cd "C:\caminho\onde\voce\extraiu\scamshield"
+cd "C:\path\to\your\extracted\scamshield"
 ```
 
-Substitua o caminho pelo local real. Dica: abra a pasta no Explorador, clique na barra de endereço, escreva `powershell` e pressione Enter.
+Replace the example path with the actual location.
 
-### 3. Crie um ambiente virtual
+Tip: open the folder in File Explorer, click the address bar, type `powershell`, and press Enter.
+
+### 3. Create a virtual environment
 
 ```powershell
 py -3.12 -m venv .venv
 ```
 
-Isso cria uma pasta `.venv` com um Python isolado para o projeto. As dependências não precisam ser instaladas no Python global.
+This creates a `.venv` folder containing an isolated Python environment for the project. Dependencies do not need to be installed globally.
 
-Os próximos comandos chamam diretamente esse Python. **Não é necessário ativar scripts nem alterar a política de execução do PowerShell.**
+The following commands call that Python executable directly. **You do not need to activate scripts or change PowerShell's execution policy.**
 
-### 4. Instale as dependências
+### 4. Install dependencies
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-O `pip` baixa Flask, Requests, python-dotenv e Waitress. SQLite já acompanha Python. A instalação das dependências precisa de internet.
+`pip` downloads Flask, Requests, python-dotenv, and Waitress. SQLite is included with Python.
 
-### 5. Configure o ambiente
+An internet connection is required to install dependencies.
+
+### 5. Configure the environment
 
 ```powershell
 Copy-Item .env.example .env
 notepad .env
 ```
 
-Execute `Copy-Item` apenas na primeira configuração; não substitua um `.env` já configurado. O Bloco de Notas permite ajustar as opções. Para começar, mantenha:
+Run `Copy-Item` only during initial setup. Do not overwrite an existing configured `.env` file.
+
+Use Notepad to adjust the settings. To get started, keep:
 
 ```dotenv
 SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
@@ -66,172 +82,340 @@ LLM_API_KEY=
 AI_DAILY_LIMIT=20
 ```
 
-O RPC público funciona sem chave, mas pode impor limites. Se usar outro provedor, configure **um endpoint Solana Mainnet HTTPS**. O código confirma a rede por `getGenesisHash`. A URL nunca é enviada ao navegador. Não publique `.env` se ele contiver chaves.
+The public RPC endpoint works without an API key, but rate limits may apply.
 
-### 6. Inicie o Flask
+If you use another provider, configure a **Solana Mainnet HTTPS endpoint**. The application verifies the network using `getGenesisHash`.
+
+The provider URL is never sent to the browser. Do not publish `.env` if it contains API keys.
+
+### 6. Start Flask
 
 ```powershell
 .\.venv\Scripts\python.exe app.py
 ```
 
-Mantenha esse terminal aberto. O servidor de desenvolvimento deve anunciar `http://127.0.0.1:5000`. Para encerrar, use Ctrl+C. Debug está desligado.
+Keep this terminal open. The development server should announce:
 
-### 7. Abra no navegador
+```text
+http://127.0.0.1:5000
+```
 
-Abra [http://127.0.0.1:5000](http://127.0.0.1:5000). Cole o endereço público, selecione 5 transações para começar e clique em **Analyze Wallet**. O indicador superior confirma apenas o backend; a conexão com a blockchain é conferida durante a análise.
+Press Ctrl+C to stop the server. Debug mode is disabled.
 
-Use o botão de exemplo ou cole:
+### 7. Open the application
+
+Visit [http://127.0.0.1:5000](http://127.0.0.1:5000).
+
+Paste a public address, select five transactions to get started, and click **Analyze Wallet**.
+
+The status indicator at the top confirms only backend availability. Blockchain connectivity is checked during analysis.
+
+Use the example button or paste:
 
 ```text
 vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg
 ```
 
-Esse endereço aparece na [documentação oficial de getAccountInfo](https://solana.com/docs/rpc/http/getaccountinfo). Seu uso aqui não indica propriedade, suspeita nem reputação. A atividade pode mudar. A consulta é exclusivamente de leitura.
+This address appears in the [official getAccountInfo documentation](https://solana.com/docs/rpc/http/getaccountinfo).
 
-## O que o sistema faz
+Its use here does not imply ownership, suspicion, or reputation. Its activity may change. Queries are strictly read-only.
 
-1. Valida os caracteres Base58 e o tamanho decodificado de 32 bytes.
-2. Confirma Mainnet, lê metadados e até 25 assinaturas recentes.
-3. Obtém detalhes das transações com `getTransaction`, `jsonParsed`, `finalized` e suporte a legacy/v0.
-4. Aplica regras determinísticas e informa dados ausentes.
-5. Mostra evidências, período, explicação local ou IA opcional e exportação JSON.
+## How it works
 
-### Entenda os três indicadores
+1. Validates Base58 characters and a decoded length of 32 bytes.
+2. Verifies Mainnet, reads account metadata, and retrieves up to 25 recent signatures.
+3. Retrieves transaction details using `getTransaction`, `jsonParsed`, `finalized` commitment, and legacy/v0 support.
+4. Applies deterministic rules and reports missing data.
+5. Displays evidence, the observed period, a local or optional AI explanation, and JSON export.
 
-| Indicador | Critério | Interpretação |
+### The three indicators
+
+| Indicator | Criteria | Interpretation |
 | --- | --- | --- |
-| Activity Burst | Pelo menos 5 assinaturas em 60 segundos e 50% da amostra datada; nenhuma data ausente | Concentração observada, não autoria ou fraude |
-| Repetitive Transfers | Mesmo destino e valor exato em 3 transações distintas com saídas explícitas de SOL bem-sucedidas | Repetição pode ser pagamento legítimo |
-| Limited Observed History | Menos de 10 assinaturas, menos de 24 horas ou lacunas de dados | Limitação de cobertura, sem pontos |
+| Activity Burst | At least five signatures within 60 seconds, representing at least 50% of the dated sample; no missing timestamps | Observed concentration, not proof of authorship or fraud |
+| Repetitive Transfers | The same destination and exact amount across three distinct transactions containing successful explicit outgoing SOL transfers | Repetition may represent legitimate payments |
+| Limited Observed History | Fewer than ten signatures, less than 24 hours, or gaps in the available data | A coverage limitation that adds no points |
 
-São reconhecidas instruções externas e internas do **System Program**, tipo `transfer`, com quantia inteira positiva, origem igual ao endereço e destino diferente. Não inferimos transferências a partir de saldo líquido. Tokens SPL, swaps, `transferWithSeed`, NFTs e programas arbitrários não são interpretados.
+The parser recognizes outer and inner **System Program** instructions of type `transfer`, with a positive integer amount, the analyzed address as the source, and a different destination.
 
-`insufficient_data` significa que a regra não pôde ser calculada com segurança. `not_triggered` significa que o critério não apareceu no subconjunto analisável. **Nenhum dos dois significa “carteira segura”.**
+Transfers are not inferred from net balance changes. SPL tokens, swaps, `transferWithSeed`, NFTs, and arbitrary programs are not interpreted.
 
-### Índice Experimental de Alertas
+`insufficient_data` means the rule could not be calculated reliably.
 
-Cada regra comportamental acionada soma 50 pontos. Cobertura soma zero. Só publicamos o índice de 0 a 100 quando as duas regras comportamentais são calculáveis. Caso contrário, o valor é `null` e mostramos apenas pontos observados, explicitamente parciais. Não é probabilidade de golpe; não existe precisão de classificação validada.
+`not_triggered` means the criterion was not observed within the analyzable subset.
 
-## IA opcional com Ollama
+**Neither status means “safe wallet.”**
 
-Sem Ollama, tudo funciona com **explicação local por regras**, identificada como tal. Isso não é IA generativa.
+### Experimental Alert Index
 
-O adaptador opcional usa a [API local do Ollama](https://docs.ollama.com/api/chat). O modelo roda no PC, consumindo memória, processamento e energia, sem cobrança por token. O modelo não acompanha o ZIP.
+Each triggered behavioral rule adds 50 points. Coverage adds zero points.
 
-1. Instale Ollama pelo [site e instruções oficiais](https://docs.ollama.com/windows).
-2. Com Ollama em execução, baixe o modelo no PowerShell:
+The index ranges from 0 to 100 and is available only when both behavioral rules can be calculated. Otherwise, its value is `null`, and only explicitly partial observed points are shown.
+
+This index is not a scam probability. Classification accuracy has not been validated.
+
+## Optional AI with Ollama
+
+Without Ollama, the application remains functional using a clearly identified **local rule-based explanation**. This is not generative AI.
+
+The optional adapter uses the [Ollama chat API](https://docs.ollama.com/api/chat).
+
+By default, the model runs locally on the computer, consuming memory, processing power, and energy without a per-token API charge. The model is not included in the ZIP.
+
+### 1. Install Ollama
+
+Follow the [official Windows installation instructions](https://docs.ollama.com/windows).
+
+### 2. Download the model
+
+With Ollama running, execute:
 
 ```powershell
 ollama pull qwen2.5:1.5b
 ```
 
-O primeiro download pode demorar. Espaço livre e desempenho dependem do computador. O modelo é uma sugestão pequena; a qualidade precisa de avaliação humana. Consulte sua licença na página do modelo antes de redistribuí-lo.
+The first download may take some time. Disk requirements and performance depend on the computer.
 
-3. Faça um teste local e carregue o modelo antes da demonstração:
+This model is a small suggested starting point. Output quality requires human evaluation. Check the model's license before redistributing it.
+
+### 3. Test and warm up the model
+
+Before the demonstration, run:
 
 ```powershell
-ollama run qwen2.5:1.5b "Explique em uma frase por que atividade incomum não comprova fraude."
+ollama run qwen2.5:1.5b "Explain in one sentence why unusual activity does not prove fraud."
 ```
 
-4. No `.env`, mude `LLM_ENABLED=false` para `LLM_ENABLED=true`. Reinicie Flask e marque “Usar IA opcional para explicar”.
+### 4. Enable the integration
 
-O adaptador envia somente métricas e estados de regras. Endereços, assinaturas, memos e logs não entram no prompt. A resposta vem rotulada `llm_unverified`, não altera o índice e nunca é executada. O timeout da IA é de 20 segundos; modelo frio ou CPU lenta podem resultar em fallback. `num_predict=512`, contexto de 4.096 tokens, input de até 8.000 caracteres e 20 tentativas por dia limitam consumo. Respostas truncadas são descartadas. Pode haver cache de explicação por uma hora.
+In `.env`, change:
 
-Uma instância remota compatível pode usar `LLM_URL` HTTPS e `LLM_API_KEY` no backend. Essa opção é para operador autorizado, com análise dos termos e custos do serviço. A URL é fixa na configuração; o formulário não aceita URLs.
+```dotenv
+LLM_ENABLED=false
+```
 
-**Validação desta entrega:** integração LLM testada com mocks; inferência de um modelo Ollama real não foi executada neste ambiente. A análise real e o resumo determinístico foram executados. Não anuncie a demo como IA generativa enquanto `source` for `local`.
+to:
 
-## Testes
+```dotenv
+LLM_ENABLED=true
+```
 
-Instale dependências de testes:
+Restart Flask and select **Use optional AI explanation**.
+
+The adapter sends only metrics and rule statuses. Addresses, signatures, memos, and program logs are not included in the prompt.
+
+Responses are labelled `llm_unverified`. They do not change the index and are never executed as code.
+
+The AI read timeout is 20 seconds. A cold model or a slow CPU may cause the application to use the local fallback.
+
+Resource limits include:
+
+- `num_predict=512`.
+- A requested context size of 4,096 tokens.
+- Input limited to 8,000 characters.
+- Up to 20 attempts per day.
+- Rejection of truncated responses.
+- Optional explanation caching for one hour.
+
+A compatible remote instance may use an HTTPS `LLM_URL` and a backend-only `LLM_API_KEY`. This option requires an authorized operator to review the service's terms and costs.
+
+The URL is fixed in the server configuration. Users cannot submit provider URLs through the form.
+
+**Validation status:** the LLM integration was tested with mocks. Inference using an actual Ollama model was not executed in this environment. Real blockchain analysis and the deterministic explanation were executed.
+
+Do not present an execution as generative AI while its explanation `source` is `local`.
+
+## Tests
+
+Install the test dependencies and run the suite:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-A suíte usa mocks e dados sintéticos, sem consultas de rede. Cobre validação, entradas inválidas, RPC incompleto, timeout, 429, cache, repetição, rajadas, cobertura, relatórios, quotas e IA. Resultados efetivamente executados constam em `docs/VALIDATION.md`.
+The suite uses mocks and synthetic data, without network requests.
 
-Consulta real separada, com a aplicação instalada:
+It covers:
+
+- Address validation and invalid input.
+- Incomplete RPC responses.
+- Timeouts and HTTP 429.
+- Caching.
+- Repetitive transfers and activity bursts.
+- Coverage limitations.
+- Report generation.
+- Quotas and optional AI behavior.
+
+Executed commands and results are recorded in `docs/VALIDATION.md`.
+
+### Separate live integration check
+
+With the application dependencies installed, run:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\live_smoke.py --limit 5 --output live_report.json
 ```
 
-O script consulta a Mainnet e salva o relatório no arquivo informado. Retorna código 1 se o RPC falhar e 2 se nenhum detalhe for obtido. Não participa automaticamente do pytest. O arquivo `docs/live_capture.json` é uma **captura real histórica de 7/11/2026**, não dados ao vivo; o dashboard padrão nunca o carrega.
+The script queries Mainnet and saves the report to the specified file.
 
-### Exemplo da API pelo PowerShell
+It returns exit code 1 if the RPC request fails and exit code 2 if no transaction details are retrieved.
 
-Com o servidor aberto, use outro PowerShell:
+It is not automatically included in the pytest suite.
+
+The included `docs/live_capture.json` is a **historical capture of real data from November 7, 2026**. It is not live data, and the dashboard never loads it automatically.
+
+### PowerShell API example
+
+With the server running, open another PowerShell window:
 
 ```powershell
 $scamshieldBody = @{
     wallet = "vines1vzrYbzLMRdu58ou5XTby4qAqVRLmqo36NKPTg"
     limit = 5
-    language = "pt"
+    language = "en"
     use_ai = $false
 } | ConvertTo-Json
 
 Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/analyze" -Method Post -ContentType "application/json" -Body $scamshieldBody
 ```
 
-`ConvertTo-Json` transforma os campos em JSON; `Invoke-RestMethod` envia a requisição. O contrato completo está em `docs/technical.md`, seções 25 e 26, e no documento Word.
+`ConvertTo-Json` converts the fields into JSON. `Invoke-RestMethod` sends the request.
 
-## Cache, histórico e privacidade
+The complete API contract is described in sections 25 and 26 of `docs/technical.md` and in the technical Word document.
 
-O banco `instance/scamshield.sqlite3` é criado automaticamente. Não instale MySQL nem execute migrações manualmente. Cache de assinaturas/metadados: 60 s. Cache de transações/genesis hash: uma hora. Máximo de 2.000 entradas. Histórico: até sete dias e 500 relatórios; limpeza durante novas análises. Dados podem permanecer em disco se o aplicativo não for novamente executado. Não existe página pública de histórico.
+## Cache, history, and privacy
 
-O operador RPC recebe o endereço; o banco guarda a associação entre consultas e endereços públicos. Proteja o arquivo. Para apagá-lo, encerre o servidor e remova `instance/scamshield.sqlite3` e seus arquivos `-wal`/`-shm`, se existirem. Isso remove cache, histórico e contadores; não altera a blockchain.
+The database at `instance/scamshield.sqlite3` is created automatically. MySQL and manual migrations are not required.
 
-## Segurança implementada
+Storage limits:
 
-- Validação de Base58, tipos e campos; JSON de até 4 KiB.
-- Até 25 detalhes por consulta e prazo de coleta de 45 s verificado entre chamadas.
-- Timeouts de conexão/leitura, até um retry de RPC; nenhum retry automático de IA.
-- Rate limit: 6 análises/IP/minuto, 30 globais/minuto e 2 análises simultâneas por processo.
-- SQLite parametrizado; segredos somente no ambiente; mensagens de erro sem dados de provedor.
-- Escape de templates, `textContent`, links Explorer construídos a partir de Base58, CSP e headers de proteção.
-- URLs do cliente rejeitadas; redirects HTTP desabilitados; somente métodos RPC de leitura.
+- Signature and account metadata cache: 60 seconds.
+- Transaction and genesis hash cache: one hour.
+- Maximum cache size: 2,000 entries.
+- Analysis history: up to seven days and 500 reports.
+- Cleanup occurs during subsequent analyses.
 
-O backend não confia em `X-Forwarded-For`. Um proxy fará usuários compartilharem o mesmo limite por IP, a menos que seja configurado corretamente por quem opera. O MVP não é um serviço público endurecido contra ataques distribuídos.
+Data may remain on disk if the application is not run again. There is no public history page.
 
-## Servir com Waitress
+The RPC provider receives the queried address. The database stores associations between queries and public addresses. Protect this file.
 
-Para uma execução WSGI local, encerre Flask e rode:
+To delete local data:
+
+1. Stop the server.
+2. Delete `instance/scamshield.sqlite3`.
+3. Delete its associated `-wal` and `-shm` files, if present.
+
+This removes cache, history, and counters. It does not change the blockchain.
+
+## Implemented security measures
+
+- Base58, field, and type validation.
+- JSON request bodies limited to 4 KiB.
+- Up to 25 transaction details per analysis.
+- A 45-second collection deadline checked between RPC calls.
+- Connection and read timeouts.
+- Up to one RPC retry and no automatic AI retries.
+- Rate limits of six analyses per IP per minute and 30 globally per minute.
+- Up to two concurrent analyses per process.
+- Parameterized SQLite queries.
+- Secrets stored only in the server environment.
+- Error messages that avoid exposing provider details.
+- Template escaping and frontend rendering with `textContent`.
+- Explorer links constructed from validated Base58 values.
+- Content Security Policy and protective response headers.
+- Rejection of client-supplied provider URLs.
+- Disabled HTTP redirects.
+- An allowlist of read-only RPC methods.
+
+The backend does not trust `X-Forwarded-For`.
+
+When deployed behind a proxy, users may share the same per-IP limit unless the deployment is configured appropriately.
+
+This MVP is not hardened as a public service against distributed attacks.
+
+## Serving with Waitress
+
+For a local WSGI deployment, stop the Flask development server and run:
 
 ```powershell
 .\.venv\Scripts\python.exe -m waitress --listen=127.0.0.1:5000 app:app
 ```
 
-Hospedagem pública requer HTTPS, domínio em `TRUSTED_HOSTS`, proxy com limites e armazenamento persistente. Use uma instância no MVP; o semáforo não coordena processos diferentes. Não publique o servidor de desenvolvimento. Não há necessidade de comprar hospedagem para apresentar uma gravação local.
+Public hosting requires:
 
-## Problemas comuns
+- HTTPS.
+- An allowed domain configured in `TRUSTED_HOSTS`.
+- A reverse proxy with appropriate request limits.
+- Persistent storage.
 
-| Sintoma | O que fazer |
+Use one application instance for this MVP. The concurrency semaphore does not coordinate separate processes.
+
+Do not expose the Flask development server publicly.
+
+Paid hosting is not required to present a locally recorded demonstration.
+
+## Troubleshooting
+
+| Symptom | Suggested action |
 | --- | --- |
-| `py` não encontrado | Reabra o terminal após instalar; confira o launcher e PATH |
-| `ModuleNotFoundError` | Instale requirements usando exatamente `.venv\Scripts\python.exe` |
-| Porta 5000 ocupada | Feche a execução anterior ou use Waitress com porta 5001 |
-| HTTP 429 | Aguarde Retry-After; não clique repetidamente; use limite 5 |
-| RPC indisponível/403 | Confira internet e `.env`; o endpoint público pode bloquear IPs |
-| `wrong_network` | Configure Mainnet, não Devnet; o app não muda a rede automaticamente |
-| Dados insuficientes | É um resultado válido; não force um índice nem invente atividade |
-| IA continua local | Confira LLM_ENABLED, serviço Ollama, modelo baixado, timeout e fallback_reason |
-| Banco bloqueado | Evite vários processos; encerre execuções duplicadas |
-| Host não permitido | Abra localhost/127.0.0.1; configure TRUSTED_HOSTS para deploy autorizado |
+| `py` is not recognized | Reopen the terminal after installation and check the Python launcher and PATH |
+| `ModuleNotFoundError` | Install requirements using the exact `.venv\Scripts\python.exe` executable |
+| Port 5000 is already in use | Stop the previous process or run Waitress on port 5001 |
+| HTTP 429 | Respect Retry-After, avoid repeated clicks, and use a sample limit of five |
+| RPC unavailable or HTTP 403 | Check the internet connection and `.env`; public endpoints may block IP addresses |
+| `wrong_network` | Configure Mainnet rather than Devnet; the application does not switch networks automatically |
+| Insufficient data | Treat this as a valid outcome; do not force an index or invent activity |
+| Explanation remains local | Check LLM_ENABLED, Ollama availability, the downloaded model, timeout, and fallback_reason |
+| Database is locked | Avoid multiple processes and stop duplicate application instances |
+| Host is not allowed | Use localhost or 127.0.0.1; configure TRUSTED_HOSTS for an authorized deployment |
 
-## Limitações e roadmap
+## Limitations and roadmap
 
-Não há verificação de identidade, análise de todos os tokens, reputação externa, simulação pré-assinatura, histórico completo ou precisão antifraude demonstrada. O sistema confia no provedor RPC; não valida o consenso por conta própria. Alertas são observações, não acusações.
+The MVP does not provide identity verification, support for every token, external reputation checks, pre-signing simulation, complete transaction history, or validated fraud detection accuracy.
 
-Próximos passos: parsing SPL com testes, paginação controlada, coleta rotulada, avaliação de falsos positivos e simulação pré-assinatura como módulo separado. Login, token próprio, NFTs e pagamentos não pertencem ao MVP.
+The application trusts the RPC provider. It does not independently validate blockchain consensus.
 
-## Hackathon e autoria
+Alerts describe observations, not accusations.
 
-Leia `docs/PITCH.md` e `docs/DEVELOPMENT_PLAN.md`. Registre a equipe, obtenha autorização parental quando aplicável, mantenha o desenvolvimento dentro da janela oficial e siga o portal de submissão apontado pelo evento. Elegibilidade para Beginner depende da equipe, não apenas de experiência limitada em Solana. A documentação diferencia regras gerais e informações confirmadas do evento.
+Planned improvements:
 
-**Assistência de IA:** ChatGPT auxiliou substancialmente a pesquisa, arquitetura, documentação, geração de código, UI e testes desta versão em 7/11/2026. O desenvolvedor deve revisar o código, registrar suas alterações e declarar essa assistência na submissão. Não declarar que todo o código foi escrito manualmente. Ollama é uma integração opcional de execução, separada da IA usada para desenvolver.
+- Tested SPL token parsing.
+- Bounded pagination.
+- Collection of appropriately labelled evaluation data.
+- Measurement of false positives.
+- Pre-signing simulation as a separate module.
 
-Bibliotecas: Flask/Jinja/Werkzeug, Requests, python-dotenv, Waitress e pytest. SQLite é da biblioteca padrão. Nenhum código de projeto pessoal anterior foi importado nesta entrega. As licenças das dependências e de qualquer modelo devem ser preservadas conforme aplicável. Este README não atribui uma licença de publicação ao usuário; a equipe decide a licença do repositório antes de publicar.
+Login, a proprietary token, NFTs, and payments are outside the MVP scope.
 
-Fontes oficiais: [evento MLH](https://events.mlh.com/events/15200-solana-hackathon), [regras gerais](https://github.com/MLH/mlh-policies/blob/main/standard-hackathon-rules.md), [Solana RPC](https://solana.com/docs/rpc), [Ollama](https://docs.ollama.com/api/chat), [Flask deploy](https://flask.palletsprojects.com/en/stable/deploying/). Catálogo completo em `docs/technical.md`.
+## Hackathon participation and attribution
+
+Read `docs/PITCH.md` and `docs/DEVELOPMENT_PLAN.md`.
+
+Register the team, obtain parental permission where applicable, keep development within the official event window, and follow the submission portal linked by the event.
+
+Beginner eligibility depends on the team, not simply on limited Solana experience.
+
+The documentation distinguishes general rules from confirmed event-specific information.
+
+**AI assistance:** ChatGPT substantially assisted with research, architecture, documentation, code generation, interface implementation, and tests for this version on November 7, 2026.
+
+The developer must review the code, record subsequent changes, and disclose this assistance in the submission. Do not claim that all code was written manually.
+
+Ollama is an optional runtime integration, separate from the AI assistance used to develop the project.
+
+Libraries include Flask/Jinja/Werkzeug, Requests, python-dotenv, Waitress, and pytest. SQLite is part of Python's standard library.
+
+No code from a previous personal project was imported into this delivery.
+
+Preserve dependency and model licenses as applicable. This README does not assign a publication license to the project; the team should choose a repository license before publishing.
+
+## Official references
+
+- [Solana Hackathon event](https://events.mlh.com/events/15200-solana-hackathon)
+- [MLH Standard Hackathon Rules](https://github.com/MLH/mlh-policies/blob/main/standard-hackathon-rules.md)
+- [Solana RPC documentation](https://solana.com/docs/rpc)
+- [Ollama chat API](https://docs.ollama.com/api/chat)
+- [Flask deployment documentation](https://flask.palletsprojects.com/en/stable/deploying/)
+
+The complete reference list is available in `docs/technical.md`.
